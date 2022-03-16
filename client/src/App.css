@@ -1,5 +1,23 @@
-.App {
+div.mb-3 {
+  align-items: center;
   text-align: center;
+}
+
+.players {
+  align-items: center;
+  text-align: center;
+}
+
+.form-select {
+  display: block;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 10%;
+}
+
+.instructions {
+  text-align: center;
+  padding-top: 20px;
 }
 
 .App-logo {
