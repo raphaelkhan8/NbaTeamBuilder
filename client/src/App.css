@@ -3,9 +3,41 @@ div.mb-3 {
   text-align: center;
 }
 
+table tr {
+  width: 100%;
+  text-align: center;
+}
+
+table td,
+table th {
+  text-align: center;
+}
+
+h4 {
+  display: inline-block;
+  margin-top: 0.5px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.team__table td {
+  width: calc(100% / 14);
+}
+
+.team-buttons {
+  margin-left: 8px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
 .players {
   align-items: center;
   text-align: center;
+}
+
+.noPlayersMessage {
+  text-align: center;
+  margin: 2%;
 }
 
 .form-select {

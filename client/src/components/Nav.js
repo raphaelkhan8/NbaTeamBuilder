@@ -20,6 +20,8 @@ const Nav = () => {
                     Centers
                 </Link>
             </BrowserRouter>
+            <br />
+            <br />
         </div>
     )
 }

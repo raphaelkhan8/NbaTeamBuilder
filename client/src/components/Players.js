@@ -9,7 +9,9 @@ const Players = (props) => {
         shootingGuards,
         smallForwards,
         powerForwards,
-        centers
+        centers,
+        teamInfo,
+        year
     } = props
 
     return (
@@ -17,32 +19,32 @@ const Players = (props) => {
             <Switch>
                 <Route path='/pointGuards'>
                     <Fragment>
-                        <h2>POINT GUARDS</h2>
-                        <PlayersList players={pointGuards} />
+                        <h3>POINT GUARDS</h3>
+                        <PlayersList players={pointGuards} teamInfo={teamInfo} year={year} />
                     </Fragment>
                 </Route>
                 <Route path='/shootingGuards'>
                     <Fragment>
-                        <h2>SHOOTING GUARDS</h2>
-                        <PlayersList players={shootingGuards} />
+                        <h3>SHOOTING GUARDS</h3>
+                        <PlayersList players={shootingGuards} teamInfo={teamInfo} year={year} />
                     </Fragment>
                 </Route>
                 <Route path='/smallForwards'>
                     <Fragment>
-                        <h2>SMALL FORWARDS</h2>
-                        <PlayersList players={smallForwards} />
+                        <h3>SMALL FORWARDS</h3>
+                        <PlayersList players={smallForwards} teamInfo={teamInfo} year={year} />
                     </Fragment>
                 </Route>
                 <Route path='/powerForwards'>
                     <Fragment>
-                        <h2>POWER FORWARDS</h2>
-                        <PlayersList players={powerForwards} />
+                        <h3>POWER FORWARDS</h3>
+                        <PlayersList players={powerForwards} teamInfo={teamInfo} year={year} />
                     </Fragment>
                 </Route>
                 <Route path='/centers'>
                     <Fragment>
-                        <h2>CENTERS</h2>
-                        <PlayersList players={centers} />
+                        <h3>CENTERS</h3>
+                        <PlayersList players={centers} teamInfo={teamInfo} year={year} />
                     </Fragment>
                 </Route>
             </Switch>

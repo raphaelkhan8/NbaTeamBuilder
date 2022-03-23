@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Container, Col, Row, Table } from 'reactstrap'
+import { Container, Col, Row, Table, Button } from 'reactstrap'
 import { v4 as uuidv4 } from 'uuid'
+import Swal from 'sweetalert2'
+import { initialTeam } from '../helpers/constants'
+import { addPlayerToTeam } from '../helpers/teamHelpers'
 
 const PlayersList = (props) => {
 
-    const { players } = props
+    const { players, year } = props
 
     const [sorted, setSorted] = useState(false)
     const [playerList, setPlayerList] = useState([])
@@ -18,6 +21,35 @@ const PlayersList = (props) => {
             playerList.sort((a, b) => (a[stat] > b[stat]) ? -1 : 1) && setSorted(true) :  
             playerList.sort((a, b) => a[stat] - b[stat]) && setSorted(true) :
         playerList.reverse() && setSorted(false)
+    }
+
+    const addPlayer = (selectedPlayer, year) => {
+        // Get the savedTeam object from local storage
+        const savedTeam = (localStorage.getItem('savedTeam')) ? 
+            JSON.parse(localStorage.getItem('savedTeam')) : initialTeam
+
+        console.log("SavedTeam: " + savedTeam)
+
+        // Make sure their are enough position spaces and minutes left to add the player
+        const numOfSamePosition = savedTeam.players.filter(player => player.position === selectedPlayer.position).length
+        if (numOfSamePosition >= 4) {
+            Swal.fire(`You can not add any more ${selectedPlayer.position.replace("_", " ")}S (Max: 4)`);
+            return
+        }
+        const enoughMintues = savedTeam.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0
+        if (!enoughMintues) {
+            Swal.fire(`Not enough minutes to add ${selectedPlayer.name}`)
+            return
+        }
+
+        // If okay, add the player and adjust the team stats
+        const teamWithAddedPlayer = addPlayerToTeam(selectedPlayer, year, savedTeam)
+
+        // Finally save the new team in localStorage
+        localStorage.setItem('savedTeam', JSON.stringify(teamWithAddedPlayer))
+
+        // If player is successfully added, filter the added player out of the player list
+        setPlayerList(playerList.filter(p => p !== selectedPlayer))
     }
 
     return (
@@ -53,6 +85,7 @@ const PlayersList = (props) => {
                                 <th title='Offensive Win Shares'>Off WS<i className='fa fa-fw fa-sort' onClick={() => sortPlayers('offWinShares')}></i></th>
                                 <th title='Defensive Win Shares'>Def WS<i className='fa fa-fw fa-sort' onClick={() => sortPlayers('defWinShares')}></i></th>
                                 <th title='Total Win Shares'>Total WS<i className='fa fa-fw fa-sort' onClick={() => sortPlayers('winShares')}></i></th>
+                                <th title='Add Player'>Add Player</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,18 +109,15 @@ const PlayersList = (props) => {
                                         <td title='Off Win Shares'>{player.offWinShares}</td>
                                         <td title='Def Win Shares'>{player.defWinShares}</td>
                                         <td title='Total Win Shares'>{player.winShares}</td>
-                                        {/* <td>
+                                        <td title='Add Player'>
                                             <Button
                                                 className='float-right mb-4 btn-custom'
                                                 size='sm'
                                                 color='success'
-                                                onClick={() =>
-                                                    addPlayer(player)
-                                                }
-                                            >
-                                                Add Player
+                                                onClick={() => addPlayer(player, year)}
+                                            >Add
                                             </Button>
-                                        </td> */}
+                                        </td>
                                     </tr>
                                 )
                             })}
