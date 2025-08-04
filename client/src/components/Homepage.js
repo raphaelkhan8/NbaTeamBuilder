@@ -19,8 +19,6 @@ const HomePage = () => {
     const getTeam = useCallback(() => {
         const savedTeam = (localStorage.getItem('savedTeam')) ?
             JSON.parse(localStorage.getItem('savedTeam')) : initialTeam;
-
-        console.log(Object.keys(savedTeam))
             
         setTeam(savedTeam)
     }, [])
